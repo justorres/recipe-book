@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  currentRoute = 'recipes';
 
+  changeTab(route: string) {
+    this.currentRoute = route;
+  }
 }
