@@ -1,9 +1,9 @@
-<app-header (currentSelectedRoute)="changeTab($event)"></app-header>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<app-header></app-header>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-recipes *ngIf="currentRoute === 'recipes'"></app-recipes>
-      <app-shopping-list *ngIf="currentRoute === 'shopping-list'"></app-shopping-list>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

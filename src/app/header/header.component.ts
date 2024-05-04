@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { DataStorageService } from '../shared/services/data-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +7,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  @Output() currentSelectedRoute = new EventEmitter<string>();
+  constructor(private dataStorageService: DataStorageService) {}
 
-  switchTab(route:string) {
-    this.currentSelectedRoute.emit(route);
+  onSaveData() {
+    this.dataStorageService.storeRecipes();
   }
 
+  onFetchData() {
+    this.dataStorageService.fetchRecipes().subscribe();
+  }
 }
