@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { FirebaseErrorEnum } from '../../shared/enums/firebase-error.enum';
 import { UserModel } from '../../shared/models/user.model';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 interface AuthResponseData {
   kind: string;
@@ -27,7 +28,7 @@ export class AuthService {
   user = new BehaviorSubject<UserModel>(null);
   private tokenExpirationTimer: any;
   apiUrl =
-    'https://identitytoolkit.googleapis.com/v1/accounts:REPLACE_ITEM?key=AIzaSyCbrac9e0fHqPkB9EyV0ccXji_wA1lfuho';
+    `https://identitytoolkit.googleapis.com/v1/accounts:REPLACE_ITEM?key=${environment.apiKey}`;
 
   constructor(
     private http: HttpClient,
