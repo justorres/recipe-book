@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-recipe-start',
-  templateUrl: './recipe-start.component.html',
-  styleUrl: './recipe-start.component.scss'
+    selector: 'app-recipe-start',
+    templateUrl: './recipe-start.component.html',
+    styleUrl: './recipe-start.component.scss',
+    standalone: true
 })
 export class RecipeStartComponent {
 

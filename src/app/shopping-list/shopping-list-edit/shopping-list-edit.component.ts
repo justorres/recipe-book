@@ -1,13 +1,16 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ShoppingListService } from '../services/shopping-list.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Ingredient } from '../../shared/models/ingredients.model';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-shopping-list-edit',
-  templateUrl: './shopping-list-edit.component.html',
-  styleUrl: './shopping-list-edit.component.scss'
+    selector: 'app-shopping-list-edit',
+    templateUrl: './shopping-list-edit.component.html',
+    styleUrl: './shopping-list-edit.component.scss',
+    standalone: true,
+    imports: [FormsModule, NgIf]
 })
 export class ShoppingListEditComponent implements OnInit, OnDestroy {
   @ViewChild('ingredientForm', { static: true }) ingredientForm: NgForm;

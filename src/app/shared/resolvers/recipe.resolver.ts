@@ -11,7 +11,6 @@ export const recipeResolver: ResolveFn<Recipe> = (
   const dataStorageService = inject(DataStorageService);
   const recipeService = inject(RecipeService);
   const id = +route.params['id'];
-  console.log(recipeService.getRecipes());
   if(recipeService.getRecipes().length === 0) {
     return dataStorageService.fetchRecipes();
   } else {

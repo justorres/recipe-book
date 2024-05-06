@@ -5,7 +5,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { MainService } from '../shared/services/main.service';
 import { Observable, Subscription } from 'rxjs';
@@ -14,9 +14,11 @@ import { AlertComponent } from '../shared/components/alert/alert.component';
 import { PlaceholderDirective } from '../shared/directives/placeholder.directive';
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss'
+    selector: 'app-auth',
+    templateUrl: './auth.component.html',
+    styleUrl: './auth.component.scss',
+    standalone: true,
+    imports: [PlaceholderDirective, FormsModule, ReactiveFormsModule]
 })
 export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode = true;
