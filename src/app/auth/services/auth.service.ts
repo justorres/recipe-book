@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { FirebaseErrorEnum } from '../../shared/enums/firebase-error.enum';
 import { UserModel } from '../../shared/models/user.model';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { DOCUMENT } from '@angular/common';
 
 interface AuthResponseData {
   kind: string;
@@ -29,11 +30,14 @@ export class AuthService {
   private tokenExpirationTimer: any;
   apiUrl =
     `https://identitytoolkit.googleapis.com/v1/accounts:REPLACE_ITEM?key=${environment.apiKey}`;
-
+  localStorage = undefined;
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) {
+    this.localStorage = document.defaultView?.localStorage;
+  }
 
   signUpUser(credentials: { email: string; password: string }) {
     const signupUrl = this.replacePlaceholder(SIGNUP);
@@ -51,7 +55,7 @@ export class AuthService {
       id: string;
       _token: string;
       _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData'));
+    } = this.localStorage ? JSON.parse(this.localStorage.getItem('userData')):undefined;
 
     if (!userData) {
       return;
@@ -77,7 +81,7 @@ export class AuthService {
 
   logoutUser() {
     this.user.next(null);
-    localStorage.removeItem('userData');
+    if (this.localStorage) localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
@@ -119,7 +123,7 @@ export class AuthService {
     const user = new UserModel(email, userId, token, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
+    if (this.localStorage) localStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handleError(errorRes: any) {
