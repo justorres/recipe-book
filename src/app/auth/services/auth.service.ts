@@ -126,7 +126,13 @@ export class AuthService {
     if (!errorRes.error || !errorRes.error.error) {
       return throwError(() => GENERIC_ERROR_MSG);
     }
-    const errorMessage = FirebaseErrorEnum[errorRes.error.error.message];
+    let errorMessage = '';
+
+    if(FirebaseErrorEnum[errorRes.error.error.message]) {
+      errorMessage = FirebaseErrorEnum[errorRes.error.error.message];
+    } else {
+      errorMessage = 'Something went wrong';
+    }
     return throwError(() => errorMessage);
   }
 
